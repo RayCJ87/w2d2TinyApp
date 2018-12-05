@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TinyApp</title>
+</head>
+<body>
+    <!-- Add your EJS code here -->
+    <h1>
+      <% for (var url in urls) {  %>
+
+        <form method="POST" action="/urls/<%=url%>/delete" >
+        <li>
+          <a href = "<%= urls[url] %>"><%= url %></a>  - <%= urls[url] %>
+          <a href = "/urls/<%=url%>">Edit</a>
+            <input type="submit" value="Delete" >
+        </li>
+        </form>
+
+      <% }; %>
+
+    </h1>
+
+<!--     <h2>
+      <label for="longURL">Enter a URL:</label>
+      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 400px">
+      <input type="submit" value="Submit">
+    </h2> -->
+</body>
+
+<header> <% include partials/_header %> </header>
+</html>
