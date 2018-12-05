@@ -49,11 +49,18 @@ app.get("/urls/:id", (req, res) => {
   res.render("urls_show", templateVars);
 })
 
+app.post("/urls/:id", (req, res) => {
+  urlDatabase[req.params.id] = `http://${req.body.longURL}`;
+  res.redirect("/urls");
+
+})
+
 app.post("/urls", (req, res) => {
   shortURL = generateRandomString();
   let theLongURL = `http://${req.body.longURL}`;
-  urlDatabase[shortURL] = theLongURL;
-  console.log(urlDatabase);
+  urlDatabase[req.params.id] = theLongURL;
+
+  // console.log(urlDatabase);
   res.redirect('/urls/' + shortURL);
 
 });
@@ -63,8 +70,17 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 })
 
+app.post("/urls/:id/delete", (req, res) => {
+
+  let deletURL = req.params.id;
+  console.log(deletURL);
+  delete urlDatabase[deletURL];
+  console.log(urlDatabase);
+  res.redirect('/urls');
+})
+
 function generateRandomString() {
-  var randomKey = "1qaz2wsx3edc4rfv5tgb6yhn7ujm8ik9ol0p";
+  var randomKey = "1qaz2wsx3edc4rfv5tgb6yhn7ujm8ik9ol0pQAZWSXEDCRFVTGBYHNUJMIKOLP";
   var ans = "";
   while (ans.length < 6){
       var tempNum = Math.floor(Math.random() * (randomKey.length ));
