@@ -5,13 +5,30 @@
 </head>
 <body>
     <!-- Add your EJS code here -->
-    <%= urls[shortURL] %> - <a href= "<%= urls[shortURL] %>"><%= shortURL %> </a>
+    <% if (username) { %>
+
+
+      <p><%=username%></p>
       <form action="/urls/<%=shortURL%>" method="POST" style="margin:150px;">
+        <%= urls[shortURL] %> - <a href= "<%= urls[shortURL] %>"><%= shortURL %> </a> <br />
       <label for="longURL">Enter a new URL:</label>
       <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
       <input type="submit" value="Update" >
+
+
     </form>
+    <form method="POST" action="/logout">
+          <input type="submit" value="Logout" >
+    </form>
+    <%} else { %>
+        <form method="GET" action="/">
+          <input type="submit" value="Sign in" >
+        </form>
+    <% } %>
+
+
+
 </body>
 
-<header> <% include partials/_header %> </header>
+<!-- <header> <% include partials/_header %></header> -->
 </html>

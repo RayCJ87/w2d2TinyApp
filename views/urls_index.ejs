@@ -3,24 +3,39 @@
 <html lang="en">
 <head>
   <title>TinyApp</title>
+
 </head>
 <body>
+    <% if (username){ %>
+    <p> <%= username %></p>
+    <% } else { %>
+  <p>You have logged out!</p>
+    <% } %>
+
     <!-- Add your EJS code here -->
     <h1>
       <% for (var url in urls) {  %>
-
         <form method="POST" action="/urls/<%=url%>/delete" >
         <li>
           <a href = "<%= urls[url] %>"><%= url %></a>  - <%= urls[url] %>
           <a href = "/urls/<%=url%>">Edit</a>
             <input type="submit" value="Delete" >
+
         </li>
         </form>
+      <% } %>
+      <% if (username) { %>
+        <form method="POST" action="/logout">
+          <input type="submit" value="Logout" >
+        </form>
+      <% } else { %>
+          <form method="GET" action="/">
+          <input type="submit" value="Sign in" >
+        </form>
+      <% } %>
 
-      <% }; %>
 
     </h1>
-
 <!--     <h2>
       <label for="longURL">Enter a URL:</label>
       <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 400px">
@@ -28,5 +43,5 @@
     </h2> -->
 </body>
 
-<header> <% include partials/_header %> </header>
+<!-- <header> <% include partials/_header %> </header> -->
 </html>

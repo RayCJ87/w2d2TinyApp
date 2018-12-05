@@ -1,2 +1,19 @@
-<!-- views/partials/_header.ejs -->
 
+
+<!DOCTYPE html>
+<html lang="en">
+  <head></head>
+  <body>
+      <%if (!locals.username) { %>
+      <form method="POST" action="/login">
+        <input type="text" name="username">
+        <input type="submit" value="Sign in" placeholder="Your username">
+      </form>
+      <% } else { %>
+      <form method="POST" action="/logout">
+        <input type="submit" value="Logout" >
+      </form>
+        <% } %>
+
+  </body>
+</html>
