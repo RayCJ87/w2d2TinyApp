@@ -6,6 +6,7 @@
   <body>
       <%if (!locals.username) { %>
       <form method="POST" action="/login">
+        <p>Welcome to the TinyApp! Please sign in as a user.</p>
         <input type="text" name="username">
         <input type="submit" value="Sign in" placeholder="Your username">
       </form>

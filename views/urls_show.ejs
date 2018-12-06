@@ -7,8 +7,8 @@
     <!-- Add your EJS code here -->
     <% if (username) { %>
 
-
-      <p><%=username%></p>
+      <p>Welcome to the TinyApp  - <%=username%> !!</p>
+      <p> Hope you enjoy !!</p>
       <form action="/urls/<%=shortURL%>" method="POST" style="margin:150px;">
         <%= urls[shortURL] %> - <a href= "<%= urls[shortURL] %>"><%= shortURL %> </a> <br />
       <label for="longURL">Enter a new URL:</label>
