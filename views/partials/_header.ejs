@@ -7,14 +7,18 @@
       <%if (!locals.username) { %>
       <form method="POST" action="/login">
         <p>Welcome to the TinyApp! Please sign in as a user.</p>
-        <input type="text" name="username">
-        <input type="submit" value="Sign in" placeholder="Your username">
+        <br />
+        <label for="yourName">Enter your name:</label>
+        <input type="text" name="username" >
+        <br />
+        <input type="submit" value="Sign in" >
       </form>
       <% } else { %>
       <form method="POST" action="/logout">
         <input type="submit" value="Logout" >
       </form>
         <% } %>
+      <a href= "/register">Register</a>
 
   </body>
 </html>

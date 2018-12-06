@@ -5,9 +5,10 @@
   <title>TinyApp</title>
 
 </head>
+<header> <% include partials/_header %> </header>
 <body>
-    <% if (username){ %>
-      <p>Welcome to the TinyApp  - <%=username%> !!</p>
+    <% if (user){ %>
+      <p>Welcome to the TinyApp  - <%=user%> !!</p>
       <p> Hope you enjoy !!</p>
     <% } else { %>
   <p>You have logged out!</p>
@@ -24,7 +25,7 @@
         </li>
         </form>
       <% } %>
-      <% if (username) { %>
+      <% if (user) { %>
         <form method="POST" action="/logout">
           <input type="submit" value="Logout" >
         </form>
@@ -39,5 +40,5 @@
 
 </body>
 
-<!-- <header> <% include partials/_header %> </header> -->
+
 </html>
