@@ -6,11 +6,14 @@
 <header> <% include partials/_header %> </header>
 <body>
     <% if (user){ %>
-      <p>Welcome to the TinyApp  - <%=name[name.length-1]%> !!</p>
+      <p>Welcome to the TinyApp  - <%=name%> !!</p>
       <p> Hope you enjoy !!</p>
     <% } else { %>
       <p>You have logged out!</p>
     <% } %>
+    <form method="GET" action="/urls/new">
+    <input type="submit" value="Make a Short URL." >
+    </form>
     <h1>
       <% for (var url in urls) {  %>
         <form method="POST" action="/urls/<%=url%>/delete" >
