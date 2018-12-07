@@ -2,43 +2,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>TinyApp</title>
-
 </head>
 <header> <% include partials/_header %> </header>
 <body>
     <% if (user){ %>
-      <p>Welcome to the TinyApp  - <%=user%> !!</p>
+      <p>Welcome to the TinyApp  - <%=name[name.length-1]%> !!</p>
       <p> Hope you enjoy !!</p>
     <% } else { %>
-  <p>You have logged out!</p>
+      <p>You have logged out!</p>
     <% } %>
-    <!-- Add your EJS code here -->
     <h1>
       <% for (var url in urls) {  %>
         <form method="POST" action="/urls/<%=url%>/delete" >
         <li>
-          <a href = "<%= urls[url] %>"><%= url %></a>  - <%= urls[url] %>
-          <a href = "/urls/<%=url%>">Edit</a>
-            <input type="submit" value="Delete" >
-
+          <a href = "<%= urls[url].longURL %>"><%= urls[url].shortURL %></a>  - <%= urls[url].longURL %>
+          <% if (user === urls[url].userID) { %>
+            <a href = "/urls/<%=url%>">Edit</a>
+              <input type="submit" value="Delete" >
+          <% } %>
         </li>
         </form>
       <% } %>
-      <% if (user) { %>
-        <form method="POST" action="/logout">
-          <input type="submit" value="Logout" >
-        </form>
-      <% } else { %>
-          <form method="GET" action="/">
-          <input type="submit" value="Sign in" >
-        </form>
-      <% } %>
-
-
     </h1>
-
 </body>
-
-
 </html>

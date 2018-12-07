@@ -4,12 +4,9 @@
 <html lang="en">
   <head></head>
   <body>
-      <%if (!locals.username) { %>
+      <%if (!locals.user) { %>
       <form method="GET" action="/login">
         <p>Welcome to the TinyApp! Please sign in as a user.</p>
-        <br />
-        <label for="yourName">Enter your name:</label>
-        <input type="text" name="username" >
         <br />
         <input type="submit" value="Sign in" >
       </form>
@@ -18,7 +15,9 @@
         <input type="submit" value="Logout" >
       </form>
         <% } %>
-      <a href= "/register">Register</a>
-
+      <form method="GET" action="/register">
+        <input type="submit" value="Register" >
+      </form>
+      <!-- <a href= "/register">Register</a> -->
   </body>
 </html>

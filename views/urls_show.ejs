@@ -3,32 +3,28 @@
 <head>
   <title>TinyApp</title>
 </head>
+<header> <% include partials/_header %> </header>
 <body>
-    <!-- Add your EJS code here -->
-    <% if (username) { %>
-
-      <p>Welcome to the TinyApp  - <%=username%> !!</p>
+    <!-- <% if (user) { %> -->
+      <p>Welcome to the TinyApp  - <%=name[name.length-1]%> !!</p>
       <p> Hope you enjoy !!</p>
+      <% if (user !== urls[shortURL].userID) { %>
+        <p>This short URL is not created by you.</p>
+      <% } %>
+      <%= urls[shortURL].longURL %> - <a href= "<%= urls[shortURL].longURL %>"><%= shortURL %> </a> <br />
+      <a href= "/urls"> -> main page</a>
       <form action="/urls/<%=shortURL%>" method="POST" style="margin:150px;">
-        <%= urls[shortURL] %> - <a href= "<%= urls[shortURL] %>"><%= shortURL %> </a> <br />
-      <label for="longURL">Enter a new URL:</label>
-      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-      <input type="submit" value="Update" >
-
-
-    </form>
-    <form method="POST" action="/logout">
-          <input type="submit" value="Logout" >
-    </form>
+        <label for="longURL">Enter a new URL:</label>
+        <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
+        <input type="submit" value="Update" >
+      </form>
+<!--       <form method="POST" action="/logout">
+            <input type="submit" value="Logout" >
+      </form>
     <%} else { %>
         <form method="GET" action="/">
           <input type="submit" value="Sign in" >
         </form>
-    <% } %>
-
-
-
+    <% } %> -->
 </body>
-
-<!-- <header> <% include partials/_header %></header> -->
 </html>
