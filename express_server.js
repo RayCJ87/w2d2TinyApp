@@ -26,6 +26,8 @@ const urlDatabase = {
 const users = {};
 const nameList = {};
 
+
+
 app.get("/", (req, res) => {
   const templateVars = {user: req.cookies.theUserId};
   res.render("./partials/_header", templateVars);
@@ -42,7 +44,7 @@ app.post("/login", (req, res) => {
   const theUser = authenticateUser(email);
 
   if (theUser) {
-    if (email == theUser.email && bcrypt.compareSync(password, theUser.hashedPassword)){
+    if (email === theUser.email && bcrypt.compareSync(password, theUser.hashedPassword)){
       req.session.theUserId = theUser.theUserId;
       res.redirect("/urls");
     }
@@ -68,9 +70,12 @@ app.post("/register", (req, res) => {
     if (!email.length || !password.length || !name.length ) {
       res.send("Error 400");
     }
+    else if (!email.includes('@') || email.charAt(0) === '@' || email.charAt(email.length-1) === '@'){
+      res.send("Error 400");
+    }
     else {
-      for (let u in users) {
-        if (email === users[u].email){
+      for (let userID in users) {
+        if (email === users[userID].email){
           res.send("Error 400");
         }
       }
@@ -84,10 +89,10 @@ app.post("/register", (req, res) => {
 
 // helper funciton for setting urls for users
 function urlsForUser (id){
-  let userUrlDb = {};
-  for (let u in urlDatabase) {
-    if (id == urlDatabase[u].userID) {
-      userUrlDb[u] = urlDatabase[u];
+  const userUrlDb = {};
+  for (let user in urlDatabase) {
+    if (id === urlDatabase[user].userID) {
+      userUrlDb[user] = urlDatabase[user];
     }
   }
   return userUrlDb;
@@ -96,19 +101,20 @@ function urlsForUser (id){
 // generate random keys as short url and random id
 function generateRandomString() {
   const randomKey = "1qaz2wsx3edc4rfv5tgb6yhn7ujm8ik9ol0pQAZWSXEDCRFVTGBYHNUJMIKOLP";
-  let ans = "";
-  while (ans.length < 6){
-    var tempNum = Math.floor(Math.random() * (randomKey.length));
-    ans+= randomKey[tempNum];
+  let output = "";
+  while (output.length < 6){
+
+    let temporaryNumber = Math.floor(Math.random() * (randomKey.length));
+    output+= randomKey[temporaryNumber];
   }
-  return ans;
+  return output;
 }
 
 //verify user information
 function authenticateUser (userMail) {
-  for (let u in users) {
-    if (userMail === users[u].email){
-      return users[u];
+  for (let userID in users) {
+    if (userMail === users[userID].email){
+      return users[userID];
     }
   }
   return false;
@@ -116,6 +122,7 @@ function authenticateUser (userMail) {
 
 // store user information
 function registerUser (randomID, email, password) {
+
   users[randomID] = {theUserId: randomID, email: email, hashedPassword: password};
   return randomID;
 
