@@ -25,11 +25,12 @@ const urlDatabase = {
 
 const users = {};
 const nameList = {};
+const mailList = {};
 
 
 
 app.get("/", (req, res) => {
-  const templateVars = {user: req.cookies.theUserId};
+  const templateVars = {user: req.cookies.theUserId, mail: mailList[req.cookies.theUserId] };
   res.render("./partials/_header", templateVars);
 });
 
@@ -46,6 +47,7 @@ app.post("/login", (req, res) => {
   if (theUser) {
     if (email === theUser.email && bcrypt.compareSync(password, theUser.hashedPassword)){
       req.session.theUserId = theUser.theUserId;
+      req.session.theUserEmail = email;
       res.redirect("/urls");
     }
     else {
@@ -70,9 +72,6 @@ app.post("/register", (req, res) => {
     if (!email.length || !password.length || !name.length ) {
       res.send("Error 400");
     }
-    else if (!email.includes('@') || email.charAt(0) === '@' || email.charAt(email.length-1) === '@'){
-      res.send("Error 400");
-    }
     else {
       for (let userID in users) {
         if (email === users[userID].email){
@@ -81,8 +80,9 @@ app.post("/register", (req, res) => {
       }
       const thePassword = req.body.password; // you will probably this from req.params
       const hashedPassword = bcrypt.hashSync(thePassword, 10);
-      const userID = registerUser(randomID, email, hashedPassword);
+      registerUser(randomID, email, hashedPassword);
       nameList[randomID] = req.body.name;
+      mailList[randomID] = req.body.email;
       res.redirect("/urls",);
     }
 })
@@ -131,6 +131,7 @@ function registerUser (randomID, email, password) {
 app.get("/urls", (req, res) => {
   const urlsUserDb = urlsForUser(req.session.theUserId);
   const templateVars = { name: nameList[req.session.theUserId],
+                       mail: mailList[req.session.theUserId],
                        urls: urlsUserDb,
                        user: req.session.theUserId};
   res.render("urls_index", templateVars);
@@ -140,7 +141,7 @@ app.get("/urls", (req, res) => {
 //direct to the webpage for generating new short url
 app.get("/urls/new", (req, res) => {
   if (req.session.theUserId){
-    const templateVars = { user: req.session.theUserId};
+    const templateVars = { user: req.session.theUserId, mail: mailList[req.session.theUserId]};
     res.render("urls_new",templateVars);
   }
   else {
@@ -154,6 +155,7 @@ app.get("/urls/:id", (req, res) => {
     res.redirect('/urls/' + req.param.id);
   }
   const templateVars = { name: nameList[req.session.theUserId],
+                       mail: mailList[req.session.theUserId],
                        shortURL: req.params.id,
                        urls: urlDatabase,
                        user: req.session.theUserId};
