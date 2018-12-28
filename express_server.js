@@ -181,12 +181,12 @@ app.post("/urls", (req, res) => {
   let shortURL;
   shortURL = generateRandomString();
   let theLongURL;
-  if ((req.body.longURL).includes('http://')){
+  if ((req.body.longURL).includes('http://') || (req.body.longURL).includes('https://')){
     theLongURL = req.body.longURL;
   }
-  else if ((req.body.longURL).includes('https://')){
-    theLongURL = req.body.longURL;
-  }
+  // else if ((req.body.longURL).includes('https://')){
+  //   theLongURL = req.body.longURL;
+  // }
   else{
     theLongURL = `http://${req.body.longURL}`;
   }
